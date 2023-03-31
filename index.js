@@ -9,7 +9,7 @@ const port = 7000;
 app.use(bodyParser.json());
 
 // Connect to MongoDB database named "Exam" using Mongoose
-mongoose.connect('mongodb://localhost:27017/Exam', {
+mongoose.connect('mongodb+srv://tempuser:123@cluster0.f9d6o.gcp.mongodb.net/Exam', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });

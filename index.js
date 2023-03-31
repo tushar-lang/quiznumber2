@@ -23,6 +23,15 @@ const quizSchema = new mongoose.Schema({
 // Define a model for the "quizes" collection using the schema
 const Quiz = mongoose.model('Quiz', quizSchema);
 
+
+const db = mongoose.connection
+
+db.once('open', async () => {
+    const quizzes = await Quiz.find();
+    console.log(JSON.stringify(quizzes)); // output the quizzes as a JSON string
+
+});
+
 // Define a route handler for the root route that creates a new document in the "quizes" collection
 app.get('/', async (req, res) => {
     try {
@@ -38,16 +47,17 @@ app.get('/', async (req, res) => {
             await quiz.save();
             res.status(200).send('Quiz created successfully');
         } catch (error){
+            console.log(error)
             res.status(500).send('Failed to create quiz');
-        }
-
-        // Return a response indicating success
-        res.status(200).send('Quiz created successfully');
+        } 
     } catch (error) {
+        console.log(error)
+
         // Return a response indicating failure
         res.status(500).send('Failed to create quiz');
     }
 });
+
 
 // Start the server on port 7000
 app.listen(port, () => {

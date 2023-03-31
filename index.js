@@ -33,7 +33,13 @@ app.get('/', async (req, res) => {
         });
 
         // Save the new document to the "quizes" collection
-        await quiz.save();
+
+        try {
+            await quiz.save();
+            res.status(200).send('Quiz created successfully');
+        } catch (error){
+            res.status(500).send('Failed to create quiz');
+        }
 
         // Return a response indicating success
         res.status(200).send('Quiz created successfully');
